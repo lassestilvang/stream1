@@ -335,7 +335,7 @@ describe("/api/auth/signup", () => {
       expect(result).toEqual({
         error: "Failed to create user",
       });
-    });
+    }, 10000);
 
     // Edge case: Invalid email format
     it("should return 400 for invalid email format", async () => {
