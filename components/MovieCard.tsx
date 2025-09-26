@@ -34,7 +34,7 @@ export const MovieCard = ({ item }: MovieCardProps) => {
       tmdbId: item.id,
       type: isMovie ? "movie" : "tv",
       watchedDate: new Date().toISOString().split("T")[0],
-      rating: 0,
+      rating: 5, // Default rating
       notes: "",
     });
   };
@@ -52,12 +52,7 @@ export const MovieCard = ({ item }: MovieCardProps) => {
     <Card className="w-full max-w-sm mx-auto">
       <CardHeader>
         <div className="aspect-[2/3] relative overflow-hidden rounded-md">
-          <Image
-            src={posterUrl}
-            alt={title}
-            fill
-            className="object-cover"
-          />
+          <Image src={posterUrl} alt={title} fill className="object-cover" />
         </div>
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>

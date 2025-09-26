@@ -51,10 +51,10 @@ describe("MovieCard", () => {
     expect(screen.getByText("2023")).toBeInTheDocument();
     expect(screen.getByText("A test movie overview")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Add to Watched" })
+      screen.getByRole("button", { name: "Add to Watched" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Add to Watchlist" })
+      screen.getByRole("button", { name: "Add to Watchlist" }),
     ).toBeInTheDocument();
   });
 

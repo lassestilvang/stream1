@@ -1,6 +1,8 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { WatchedCard } from "../../components/WatchedCard";
 import type { Watched } from "../../state/store";
+// Fixed: Added ES6 import for useWatchedStore to replace require() usage
+import { useWatchedStore } from "../../state/store";
 import { getMovieDetails, getTVShowDetails } from "../../lib/tmdb";
 
 // Mock Next.js Link
@@ -156,7 +158,8 @@ describe("WatchedCard", () => {
     (getMovieDetails as jest.Mock).mockResolvedValue(mockMovieData);
 
     const mockDeleteWatched = jest.fn();
-    jest.mocked(require("../../state/store").useWatchedStore).mockReturnValue({
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useWatchedStore).mockReturnValue({
       deleteWatched: mockDeleteWatched,
       loading: false,
     });
@@ -182,7 +185,8 @@ describe("WatchedCard", () => {
 
     (getMovieDetails as jest.Mock).mockResolvedValue(mockMovieData);
 
-    jest.mocked(require("../../state/store").useWatchedStore).mockReturnValue({
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useWatchedStore).mockReturnValue({
       deleteWatched: jest.fn(),
       loading: true,
     });

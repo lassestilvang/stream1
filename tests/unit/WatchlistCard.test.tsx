@@ -1,6 +1,8 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { WatchlistCard } from "../../components/WatchlistCard";
 import type { Watchlist } from "../../state/store";
+// Fixed: Added ES6 import for useWatchlistStore to replace require() usage
+import { useWatchlistStore } from "../../state/store";
 import { getMovieDetails, getTVShowDetails } from "../../lib/tmdb";
 
 // Mock the store
@@ -120,12 +122,11 @@ describe("WatchlistCard", () => {
     (getTVShowDetails as jest.Mock).mockResolvedValue(mockTVData);
 
     const mockRemoveFromWatchlist = jest.fn();
-    jest
-      .mocked(require("../../state/store").useWatchlistStore)
-      .mockReturnValue({
-        removeFromWatchlist: mockRemoveFromWatchlist,
-        loading: false,
-      });
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useWatchlistStore).mockReturnValue({
+      removeFromWatchlist: mockRemoveFromWatchlist,
+      loading: false,
+    });
 
     render(<WatchlistCard item={mockWatchlist} />);
 
@@ -150,12 +151,11 @@ describe("WatchlistCard", () => {
 
     (getTVShowDetails as jest.Mock).mockResolvedValue(mockTVData);
 
-    jest
-      .mocked(require("../../state/store").useWatchlistStore)
-      .mockReturnValue({
-        removeFromWatchlist: jest.fn(),
-        loading: true,
-      });
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useWatchlistStore).mockReturnValue({
+      removeFromWatchlist: jest.fn(),
+      loading: true,
+    });
 
     render(<WatchlistCard item={mockWatchlist} />);
 

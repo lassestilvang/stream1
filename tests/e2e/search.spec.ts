@@ -11,7 +11,7 @@ test.describe("Search Functionality", () => {
 
     // Check that the search bar is visible
     await expect(
-      page.locator('input[placeholder="Search for movies or TV shows..."]')
+      page.locator('input[placeholder="Search for movies or TV shows..."]'),
     ).toBeVisible();
 
     // Check that the type selector is visible
@@ -44,7 +44,7 @@ test.describe("Search Functionality", () => {
     // Enter search query
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test Movie"
+      "Test Movie",
     );
 
     // Click search button
@@ -55,7 +55,7 @@ test.describe("Search Functionality", () => {
 
     // Check that the movie card appears
     await expect(
-      page.locator('.grid [data-testid="movie-card"]')
+      page.locator('.grid [data-testid="movie-card"]'),
     ).toBeVisible();
     await expect(page.locator('h3:has-text("Test Movie")')).toBeVisible();
   });
@@ -87,7 +87,7 @@ test.describe("Search Functionality", () => {
     // Enter search query
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test TV Show"
+      "Test TV Show",
     );
 
     // Click search button
@@ -98,7 +98,7 @@ test.describe("Search Functionality", () => {
 
     // Check that the TV show card appears
     await expect(
-      page.locator('.grid [data-testid="movie-card"]')
+      page.locator('.grid [data-testid="movie-card"]'),
     ).toBeVisible();
     await expect(page.locator('h3:has-text("Test TV Show")')).toBeVisible();
   });
@@ -117,7 +117,7 @@ test.describe("Search Functionality", () => {
     // Enter search query
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test Movie"
+      "Test Movie",
     );
 
     // Click search button
@@ -141,7 +141,7 @@ test.describe("Search Functionality", () => {
     // Enter search query
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Non-existent Movie"
+      "Non-existent Movie",
     );
 
     // Click search button
@@ -164,7 +164,7 @@ test.describe("Search Functionality", () => {
     // Enter search query
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test Movie"
+      "Test Movie",
     );
 
     // Click search button
@@ -173,7 +173,7 @@ test.describe("Search Functionality", () => {
     // Should show error state or fallback gracefully
     // The app should handle this without crashing
     await expect(
-      page.locator('h1:has-text("Movie & TV Show Search")')
+      page.locator('h1:has-text("Movie & TV Show Search")'),
     ).toBeVisible();
   });
 
@@ -191,7 +191,7 @@ test.describe("Search Functionality", () => {
     // Enter search query
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test Movie"
+      "Test Movie",
     );
 
     // Click search button
@@ -247,7 +247,7 @@ test.describe("Search Functionality", () => {
     // First search
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "First Movie"
+      "First Movie",
     );
     await page.click('button:has-text("Search")');
     await expect(page.locator('h3:has-text("First Movie")')).toBeVisible();
@@ -255,7 +255,7 @@ test.describe("Search Functionality", () => {
     // Second search
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Second Movie"
+      "Second Movie",
     );
     await page.click('button:has-text("Search")');
     await expect(page.locator('h3:has-text("Second Movie")')).toBeVisible();

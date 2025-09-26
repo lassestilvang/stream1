@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     if (!email || !password) {
       return Response.json(
         { error: "Email and password are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     if (existingUser) {
       return Response.json(
         { error: "User with this email already exists" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         message: "User created successfully",
         user: { id: newUser.id, email: newUser.email, name: newUser.name },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Error creating user:", error);

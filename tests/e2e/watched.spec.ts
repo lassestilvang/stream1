@@ -48,7 +48,7 @@ test.describe("Watched Functionality", () => {
     // Search for a movie
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test Movie"
+      "Test Movie",
     );
     await page.click('button:has-text("Search")');
 
@@ -63,7 +63,7 @@ test.describe("Watched Functionality", () => {
 
     // After successful addition, should show success state or navigate
     await expect(
-      page.locator('button:has-text("Add to Watched")')
+      page.locator('button:has-text("Add to Watched")'),
     ).toBeVisible();
   });
 
@@ -112,7 +112,7 @@ test.describe("Watched Functionality", () => {
     // Search for a TV show
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test TV Show"
+      "Test TV Show",
     );
     await page.click('button:has-text("Search")');
 
@@ -207,7 +207,7 @@ test.describe("Watched Functionality", () => {
 
     // Should navigate to edit page
     await expect(
-      page.locator('h1:has-text("Edit Watched Item")')
+      page.locator('h1:has-text("Edit Watched Item")'),
     ).toBeVisible();
 
     // Update rating
@@ -269,7 +269,7 @@ test.describe("Watched Functionality", () => {
 
     // After deletion, the item should be removed from the list
     await expect(
-      page.locator('[data-testid="watched-card"]')
+      page.locator('[data-testid="watched-card"]'),
     ).not.toBeVisible();
   });
 
@@ -309,7 +309,7 @@ test.describe("Watched Functionality", () => {
     // Search for a movie
     await page.fill(
       'input[placeholder="Search for movies or TV shows..."]',
-      "Test Movie"
+      "Test Movie",
     );
     await page.click('button:has-text("Search")');
 
@@ -324,7 +324,7 @@ test.describe("Watched Functionality", () => {
 
     // After error, should return to normal state
     await expect(
-      page.locator('button:has-text("Add to Watched")')
+      page.locator('button:has-text("Add to Watched")'),
     ).toBeVisible();
   });
 

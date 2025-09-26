@@ -41,7 +41,8 @@ describe("SearchBar", () => {
 
   it("calls search when button is clicked with valid query", () => {
     const mockSearch = jest.fn();
-    jest.mocked(require("../../state/store").useSearchStore).mockReturnValue({
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useSearchStore).mockReturnValue({
       search: mockSearch,
       loading: false,
     });
@@ -61,7 +62,8 @@ describe("SearchBar", () => {
 
   it("does not call search when query is empty", () => {
     const mockSearch = jest.fn();
-    jest.mocked(require("../../state/store").useSearchStore).mockReturnValue({
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useSearchStore).mockReturnValue({
       search: mockSearch,
       loading: false,
     });
@@ -75,7 +77,8 @@ describe("SearchBar", () => {
   });
 
   it("shows loading state", () => {
-    jest.mocked(require("../../state/store").useSearchStore).mockReturnValue({
+    // Fixed: Replaced require() style import with ES6 import for consistency
+    jest.mocked(useSearchStore).mockReturnValue({
       search: jest.fn(),
       loading: true,
     });

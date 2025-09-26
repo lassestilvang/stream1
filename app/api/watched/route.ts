@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     console.error("Error fetching watched items:", error);
     return Response.json(
       { error: "Failed to fetch watched items" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -58,21 +58,21 @@ export async function POST(request: NextRequest) {
     if (!tmdbId || !type || !watchedDate || !rating) {
       return Response.json(
         { error: "Missing required fields: tmdbId, type, watchedDate, rating" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!["movie", "tv"].includes(type)) {
       return Response.json(
         { error: "Invalid type. Must be 'movie' or 'tv'" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (rating < 1 || rating > 10) {
       return Response.json(
         { error: "Rating must be between 1 and 10" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     console.error("Error adding watched item:", error);
     return Response.json(
       { error: "Failed to add watched item" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

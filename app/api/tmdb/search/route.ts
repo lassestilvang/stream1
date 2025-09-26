@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
         error:
           "Missing or invalid query parameters: q (search term) and type (movie or tv) are required",
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     console.error("TMDB search error:", error);
     return Response.json(
       { error: "Failed to perform search. Please try again later." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 import type { Movie, TVShow } from "../lib/tmdb";
-import { searchMovies, searchTVShows } from "../lib/tmdb";
 import { users, watched, watchlist } from "../lib/db";
 import type { InferSelectModel, InferInsertModel } from "drizzle-orm";
 
@@ -34,11 +33,14 @@ export const useSearchStore = create<SearchState>((set, get) => ({
     set({ loading: true });
     try {
       const { type } = get();
-      const results =
-        type === "movie"
-          ? await searchMovies(query)
-          : await searchTVShows(query);
-      set({ results, loading: false });
+      const response = await fetch(
+        `/api/tmdb/search?q=${encodeURIComponent(query)}&type=${type}`
+      );
+      if (!response.ok) {
+        throw new Error(`Search failed: ${response.statusText}`);
+      }
+      const data = await response.json();
+      set({ results: data.results, loading: false });
     } catch (error) {
       set({ loading: false });
       toast.error("Failed to search for movies and TV shows");
@@ -64,7 +66,8 @@ interface WatchedState {
   deleteWatched: (id: number) => Promise<void>;
 }
 
-export const useWatchedStore = create<WatchedState>((set, _get) => ({
+export const useWatchedStore = create<WatchedState>((set) => ({
+  // Fixed: Removed unused _get parameter to eliminate ESLint warning
   items: [],
   loading: false,
   fetchWatched: async (filters = {}) => {
@@ -167,7 +170,8 @@ interface WatchlistState {
   removeFromWatchlist: (id: number) => Promise<void>;
 }
 
-export const useWatchlistStore = create<WatchlistState>((set, _get) => ({
+export const useWatchlistStore = create<WatchlistState>((set) => ({
+  // Fixed: Removed unused _get parameter to eliminate ESLint warning
   items: [],
   loading: false,
   fetchWatchlist: async () => {

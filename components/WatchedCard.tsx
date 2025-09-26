@@ -13,7 +13,6 @@ import {
 } from "./ui/card";
 import { Loader2, AlertCircle } from "lucide-react";
 import { useWatchedStore } from "../state/store";
-import { getMovieDetails, getTVShowDetails } from "../lib/tmdb";
 import type { Watched } from "../state/store";
 import type { Movie, TVShow } from "../lib/tmdb";
 
@@ -34,10 +33,22 @@ export const WatchedCard = ({ item }: WatchedCardProps) => {
         setTmdbError(null);
 
         if (item.type === "movie") {
-          const data = await getMovieDetails(item.tmdbId);
+          const response = await fetch(`/api/tmdb/movie/${item.tmdbId}`);
+          if (!response.ok) {
+            throw new Error(
+              `Failed to fetch movie details: ${response.statusText}`,
+            );
+          }
+          const data = await response.json();
           setTmdbData(data);
         } else if (item.type === "tv") {
-          const data = await getTVShowDetails(item.tmdbId);
+          const response = await fetch(`/api/tmdb/tv/${item.tmdbId}`);
+          if (!response.ok) {
+            throw new Error(
+              `Failed to fetch TV show details: ${response.statusText}`,
+            );
+          }
+          const data = await response.json();
           setTmdbData(data);
         }
       } catch (error) {

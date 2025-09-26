@@ -28,10 +28,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning style={{ viewTransitionName: 'root' }}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      style={{ viewTransitionName: "root" }}
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        style={{ viewTransitionName: 'main' }}
+        style={{ viewTransitionName: "main" }}
       >
         <SessionProvider>
           <ThemeProvider

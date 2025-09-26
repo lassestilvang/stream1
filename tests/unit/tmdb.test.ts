@@ -1,4 +1,9 @@
-import { searchMovies, searchTVShows, getMovieDetails, getTVShowDetails } from "../../lib/tmdb";
+import {
+  searchMovies,
+  searchTVShows,
+  getMovieDetails,
+  getTVShowDetails,
+} from "../../lib/tmdb";
 
 // Mock fetch
 global.fetch = jest.fn();
@@ -47,7 +52,7 @@ describe("tmdb", () => {
 
       expect(result).toEqual(mockResponse.results);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.themoviedb.org/3/search/movie?api_key=test-api-key&query=test%20query"
+        "https://api.themoviedb.org/3/search/movie?api_key=test-api-key&query=test%20query",
       );
     });
 
@@ -59,7 +64,7 @@ describe("tmdb", () => {
       });
 
       await expect(searchMovies("test query")).rejects.toThrow(
-        "TMDB API error: 404 Not Found"
+        "TMDB API error: 404 Not Found",
       );
     });
   });
@@ -98,7 +103,7 @@ describe("tmdb", () => {
 
       expect(result).toEqual(mockResponse.results);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.themoviedb.org/3/search/tv?api_key=test-api-key&query=test%20query"
+        "https://api.themoviedb.org/3/search/tv?api_key=test-api-key&query=test%20query",
       );
     });
 
@@ -110,7 +115,7 @@ describe("tmdb", () => {
       });
 
       await expect(searchTVShows("test query")).rejects.toThrow(
-        "TMDB API error: 500 Internal Server Error"
+        "TMDB API error: 500 Internal Server Error",
       );
     });
   });
@@ -142,7 +147,7 @@ describe("tmdb", () => {
 
       expect(result).toEqual(mockMovie);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.themoviedb.org/3/movie/1?api_key=test-api-key"
+        "https://api.themoviedb.org/3/movie/1?api_key=test-api-key",
       );
     });
 
@@ -154,7 +159,7 @@ describe("tmdb", () => {
       });
 
       await expect(getMovieDetails(1)).rejects.toThrow(
-        "TMDB API error: 404 Not Found"
+        "TMDB API error: 404 Not Found",
       );
     });
   });
@@ -186,7 +191,7 @@ describe("tmdb", () => {
 
       expect(result).toEqual(mockTVShow);
       expect(global.fetch).toHaveBeenCalledWith(
-        "https://api.themoviedb.org/3/tv/2?api_key=test-api-key"
+        "https://api.themoviedb.org/3/tv/2?api_key=test-api-key",
       );
     });
 
@@ -198,7 +203,7 @@ describe("tmdb", () => {
       });
 
       await expect(getTVShowDetails(2)).rejects.toThrow(
-        "TMDB API error: 500 Internal Server Error"
+        "TMDB API error: 500 Internal Server Error",
       );
     });
   });
@@ -207,7 +212,8 @@ describe("tmdb", () => {
     delete process.env.TMDB_API_KEY;
 
     expect(() => {
-      require("../../lib/tmdb");
+      // Import the module to trigger the check
+      import("../../lib/tmdb");
     }).toThrow("TMDB_API_KEY environment variable is not set");
   });
 });

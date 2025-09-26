@@ -3,7 +3,8 @@ import { auth } from "../../../auth";
 import { db, watchlist } from "../../../lib/db";
 import { eq, and } from "drizzle-orm";
 
-export async function GET(_request: NextRequest) {
+export async function GET() {
+  // Fixed: Removed unused _request parameter to eliminate ESLint warning
   try {
     const session = await auth();
     if (!session?.user?.id) {

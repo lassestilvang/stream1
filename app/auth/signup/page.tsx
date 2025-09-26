@@ -53,7 +53,7 @@ export default function SignUpPage() {
 
       if (result?.error) {
         toast.error(
-          "Account created but sign in failed. Please try signing in."
+          "Account created but sign in failed. Please try signing in.",
         );
         router.push("/auth/signin");
       } else {
@@ -61,7 +61,8 @@ export default function SignUpPage() {
         router.push("/");
         router.refresh();
       }
-    } catch (_error) {
+    } catch {
+      // Fixed: Removed unused _error parameter to eliminate ESLint warning
       toast.error("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);

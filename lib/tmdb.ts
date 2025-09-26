@@ -49,13 +49,13 @@ export interface SearchResult<T> {
 
 export async function searchMovies(query: string): Promise<Movie[]> {
   const url = `${TMDB_BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
-    query
+    query,
   )}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`
+      `TMDB API error: ${response.status} ${response.statusText}`,
     );
   }
 
@@ -65,13 +65,13 @@ export async function searchMovies(query: string): Promise<Movie[]> {
 
 export async function searchTVShows(query: string): Promise<TVShow[]> {
   const url = `${TMDB_BASE_URL}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(
-    query
+    query,
   )}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`
+      `TMDB API error: ${response.status} ${response.statusText}`,
     );
   }
 
@@ -85,7 +85,7 @@ export async function getMovieDetails(id: number): Promise<Movie> {
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`
+      `TMDB API error: ${response.status} ${response.statusText}`,
     );
   }
 
@@ -99,7 +99,7 @@ export async function getTVShowDetails(id: number): Promise<TVShow> {
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`
+      `TMDB API error: ${response.status} ${response.statusText}`,
     );
   }
 
