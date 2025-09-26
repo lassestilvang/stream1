@@ -26,6 +26,7 @@ jobs:
       - uses: codecov/codecov-action@v4
         if: matrix.node-version == '20'
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.info
           flags: unit
           name: unit-coverage
@@ -134,6 +135,7 @@ jobs:
       - run: pnpm test:integration --coverage --coverageReporters=json
       - uses: codecov/codecov-action@v4
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.info
           flags: combined
           name: combined-coverage
