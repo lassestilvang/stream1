@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm test:unit --coverage
+      - uses: codecov/codecov-action@v4
+        if: matrix.node-version == '20'
+        with:
+          file: ./coverage/lcov.info
+          flags: unit
+          name: unit-coverage
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: unit-test-results-${{ matrix.node-version }}
+          path: |
+            coverage/
+            **/jest-*.log
+
+  integration-tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:integration --coverage
+      - uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage/lcov.info
+          flags: integration
+          name: integration-coverage
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: integration-test-results
+          path: |
+            coverage/
+            **/jest-*.log
+
+  #  e2e-tests:
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v4
+  #      - uses: pnpm/action-setup@v4
+  #        with:
+  #          version: latest
+  #      - uses: actions/setup-node@v4
+  #        with:
+  #          node-version: 20
+  #          cache: "pnpm"
+  #      - run: pnpm install --frozen-lockfile
+  #      - run: pnpm build
+  #      - run: pnpm test:e2e
+  #      - uses: actions/upload-artifact@v4
+  #        if: always()
+  #        with:
+  #          name: e2e-test-results
+  #          path: |
+  #            test-results/
+  #            playwright-report/
+  #            .next/
+
+  benchmarks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:bench > benchmark-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark-results.txt
+
+  coverage-check:
+    runs-on: ubuntu-latest
+    needs: [unit-tests, integration-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:unit --coverage --coverageReporters=json
+      - run: pnpm test:integration --coverage --coverageReporters=json
+      - uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage/lcov.info
+          flags: combined
+          name: combined-coverage
+          fail_ci_if_error: true

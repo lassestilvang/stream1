@@ -55,7 +55,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { tmdbId, type, watchedDate, rating, notes } = body;
 
-    if (!tmdbId || !type || !watchedDate || !rating) {
+    // Check for missing required fields
+    if (tmdbId === undefined || type === undefined || watchedDate === undefined || rating === undefined) {
       return Response.json(
         { error: "Missing required fields: tmdbId, type, watchedDate, rating" },
         { status: 400 },

@@ -51,7 +51,7 @@ export async function PUT(
 
     const { id: idParam } = await params;
     const id = parseInt(idParam);
-    if (isNaN(id)) {
+    if (isNaN(id) || id <= 0) {
       return Response.json({ error: "Invalid ID" }, { status: 400 });
     }
 

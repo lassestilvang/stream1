@@ -1,24 +1,19 @@
 module.exports = {
   preset: "ts-jest",
-  testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  testEnvironment: "node",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.integration.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },
-  testEnvironmentOptions: {
-    customExportConditions: [""],
-  },
-  testMatch: ["<rootDir>/tests/**/*.test.(ts|tsx)"],
+  testMatch: ["<rootDir>/tests/integration/**/*.test.(ts|tsx)"],
   collectCoverageFrom: [
-    "app/**/*.{ts,tsx}",
-    "components/**/*.{ts,tsx}",
-    "lib/**/*.{ts,tsx}",
-    "hooks/**/*.{ts,tsx}",
+    "app/api/**/*.ts",
+    "lib/**/*.ts",
     "!app/**/layout.tsx",
     "!app/**/page.tsx",
     "!app/**/loading.tsx",
   ],
-  coverageReporters: ["text", "lcov", "json"],
+  coverageReporters: ['text', 'lcov', 'json'],
   coverageThreshold: {
     global: {
       branches: 90,
@@ -39,6 +34,5 @@ module.exports = {
       },
     ],
   },
-  transformIgnorePatterns: ["node_modules/(?!(next-auth|@auth/core|@auth)/)"],
-  testTimeout: 10000,
+  transformIgnorePatterns: ["node_modules/(?!(next-auth|@auth/core)/)"],
 };

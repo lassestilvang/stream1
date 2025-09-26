@@ -35,7 +35,7 @@ export const WatchlistCard = ({ item }: WatchlistCardProps) => {
           const response = await fetch(`/api/tmdb/movie/${item.tmdbId}`);
           if (!response.ok) {
             throw new Error(
-              `Failed to fetch movie details: ${response.statusText}`,
+              `Failed to fetch movie details: ${response.statusText}`
             );
           }
           const data = await response.json();
@@ -44,7 +44,7 @@ export const WatchlistCard = ({ item }: WatchlistCardProps) => {
           const response = await fetch(`/api/tmdb/tv/${item.tmdbId}`);
           if (!response.ok) {
             throw new Error(
-              `Failed to fetch TV show details: ${response.statusText}`,
+              `Failed to fetch TV show details: ${response.statusText}`
             );
           }
           const data = await response.json();
@@ -62,7 +62,9 @@ export const WatchlistCard = ({ item }: WatchlistCardProps) => {
   }, [item.tmdbId, item.type]);
 
   const title = tmdbData
-    ? (tmdbData as Movie).title || (tmdbData as TVShow).name
+    ? (tmdbData as Movie).title ||
+      (tmdbData as TVShow).name ||
+      `ID: ${item.tmdbId}`
     : `ID: ${item.tmdbId}`;
   const posterPath = tmdbData?.poster_path;
   const posterUrl = posterPath

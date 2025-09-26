@@ -1,12 +1,17 @@
-import "@testing-library/jest-dom";
-import dotenv from "dotenv";
-import React from "react";
+// Mock environment variables
+process.env.DATABASE_URL = "postgresql://test:test@localhost:5432/testdb";
+process.env.TMDB_API_KEY = "test-api-key";
+process.env.NEXTAUTH_SECRET = "test_secret";
 
-// Load test environment variables
-dotenv.config({ path: ".env.test" });
+// Mock fetch for TMDB API
+global.fetch = jest.fn();
 
-// Make React available globally for JSX
-global.React = React;
+// Mock crypto.randomUUID
+Object.defineProperty(global, "crypto", {
+  value: {
+    randomUUID: () => "test-uuid-123",
+  },
+});
 
 // Mock Response for Next.js API routes
 global.Response = class Response {
@@ -82,3 +87,39 @@ global.Response = class Response {
     });
   }
 } as unknown as typeof Response;
+
+// Mock NextAuth completely
+jest.mock("next-auth", () => ({
+  default: jest.fn(),
+  NextAuth: jest.fn(),
+}));
+
+jest.mock("@auth/drizzle-adapter", () => ({
+  DrizzleAdapter: jest.fn(),
+}));
+
+jest.mock("next-auth/providers/credentials", () => ({
+  default: jest.fn(),
+}));
+
+// Mock NextAuth auth function
+const mockAuth = jest.fn();
+jest.mock("./auth", () => ({
+  auth: mockAuth,
+}));
+
+// Database mocking is handled in individual test files
+
+// Mock TMDB functions
+jest.mock("./lib/tmdb", () => ({
+  getMovieDetails: jest.fn(),
+  getTVShowDetails: jest.fn(),
+  searchMovies: jest.fn(),
+  searchTVShows: jest.fn(),
+}));
+
+// Mock bcrypt
+jest.mock("bcryptjs", () => ({
+  hash: jest.fn(),
+  compare: jest.fn(),
+}));

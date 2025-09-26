@@ -5,7 +5,7 @@ import { eq, and } from "drizzle-orm";
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -15,7 +15,7 @@ export async function DELETE(
 
     const { id: idParam } = await params;
     const id = parseInt(idParam);
-    if (isNaN(id)) {
+    if (isNaN(id) || id <= 0) {
       return Response.json({ error: "Invalid ID" }, { status: 400 });
     }
 
@@ -33,7 +33,7 @@ export async function DELETE(
     console.error("Error deleting watchlist item:", error);
     return Response.json(
       { error: "Failed to delete watchlist item" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

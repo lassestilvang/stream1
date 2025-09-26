@@ -1,9 +1,11 @@
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
-const API_KEY = process.env.TMDB_API_KEY;
-
-if (!API_KEY) {
-  throw new Error("TMDB_API_KEY environment variable is not set");
+function getApiKey(): string {
+  const API_KEY = process.env.TMDB_API_KEY;
+  if (!API_KEY) {
+    throw new Error("TMDB_API_KEY environment variable is not set");
+  }
+  return API_KEY;
 }
 
 export interface Movie {
@@ -48,14 +50,15 @@ export interface SearchResult<T> {
 }
 
 export async function searchMovies(query: string): Promise<Movie[]> {
+  const API_KEY = getApiKey();
   const url = `${TMDB_BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
-    query,
+    query
   )}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`,
+      `TMDB API error: ${response.status} ${response.statusText}`
     );
   }
 
@@ -64,14 +67,15 @@ export async function searchMovies(query: string): Promise<Movie[]> {
 }
 
 export async function searchTVShows(query: string): Promise<TVShow[]> {
+  const API_KEY = getApiKey();
   const url = `${TMDB_BASE_URL}/search/tv?api_key=${API_KEY}&query=${encodeURIComponent(
-    query,
+    query
   )}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`,
+      `TMDB API error: ${response.status} ${response.statusText}`
     );
   }
 
@@ -80,12 +84,13 @@ export async function searchTVShows(query: string): Promise<TVShow[]> {
 }
 
 export async function getMovieDetails(id: number): Promise<Movie> {
+  const API_KEY = getApiKey();
   const url = `${TMDB_BASE_URL}/movie/${id}?api_key=${API_KEY}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`,
+      `TMDB API error: ${response.status} ${response.statusText}`
     );
   }
 
@@ -94,12 +99,13 @@ export async function getMovieDetails(id: number): Promise<Movie> {
 }
 
 export async function getTVShowDetails(id: number): Promise<TVShow> {
+  const API_KEY = getApiKey();
   const url = `${TMDB_BASE_URL}/tv/${id}?api_key=${API_KEY}`;
   const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(
-      `TMDB API error: ${response.status} ${response.statusText}`,
+      `TMDB API error: ${response.status} ${response.statusText}`
     );
   }
 

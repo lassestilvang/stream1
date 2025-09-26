@@ -173,6 +173,14 @@ Run unit tests with Jest:
 pnpm test
 ```
 
+### Integration Tests
+
+Run integration tests with Jest (requires database):
+
+```bash
+pnpm test:integration
+```
+
 ### End-to-End Tests
 
 Run E2E tests with Playwright:
@@ -189,6 +197,60 @@ pnpm test:e2e:headed
 
 # Run in debug mode
 pnpm test:e2e:debug
+```
+
+### Performance Benchmarks
+
+Run performance benchmarks with Tinybench:
+
+```bash
+pnpm test:bench
+```
+
+## CI/CD
+
+This project uses GitHub Actions for continuous integration and deployment. The CI pipeline runs automatically on pushes to the `main` branch and on pull requests.
+
+### CI Pipeline Overview
+
+The CI pipeline consists of the following jobs:
+
+1. **Unit Tests** - Runs unit tests with coverage on Node.js versions 18, 20, and 22
+2. **Integration Tests** - Runs integration tests with PostgreSQL database service
+3. **E2E Tests** - Runs end-to-end tests with Playwright after building the application
+4. **Benchmarks** - Runs performance benchmarks and captures results
+5. **Coverage Check** - Combines coverage reports and uploads to Codecov
+
+### Coverage Requirements
+
+- **Overall Coverage Threshold**: 90% (branches, functions, lines, statements)
+- Coverage reports are generated in text, LCOV, and JSON formats
+- Reports are uploaded to [Codecov](https://codecov.io) for detailed analysis
+
+### Failure Reporting
+
+- On test failures, detailed logs and stack traces are captured as artifacts
+- E2E test results include screenshots, videos, and Playwright reports
+- Benchmark results are saved as artifacts for performance tracking
+
+### Local Development
+
+To run the full test suite locally (excluding E2E tests):
+
+```bash
+# Run all tests
+pnpm test && pnpm test:integration
+
+# Run with coverage
+pnpm test --coverage && pnpm test:integration --coverage
+```
+
+For E2E tests, ensure the application is built and running:
+
+```bash
+pnpm build && pnpm start
+# In another terminal
+pnpm test:e2e
 ```
 
 ## Building for Production

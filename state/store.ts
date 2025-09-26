@@ -85,6 +85,9 @@ export const useWatchedStore = create<WatchedState>((set) => ({
         );
       }
       const data = await response.json();
+      if (!data || !Array.isArray(data.items)) {
+        throw new Error("Invalid response format: expected { items: [] }");
+      }
       set({ items: data.items, loading: false });
     } catch (error) {
       set({ loading: false });
@@ -184,6 +187,9 @@ export const useWatchlistStore = create<WatchlistState>((set) => ({
         );
       }
       const data = await response.json();
+      if (!data || !Array.isArray(data.items)) {
+        throw new Error("Invalid response format: expected { items: [] }");
+      }
       set({ items: data.items, loading: false });
     } catch (error) {
       set({ loading: false });
