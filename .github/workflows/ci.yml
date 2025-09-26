@@ -64,6 +64,7 @@ jobs:
       - run: pnpm test:integration --coverage
       - uses: codecov/codecov-action@v4
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.info
           flags: integration
           name: integration-coverage
