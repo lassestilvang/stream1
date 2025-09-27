@@ -59,7 +59,7 @@ A modern, full-stack web application for tracking movies and TV shows. Search fo
 ## Project Structure
 
 ```
-my-movie-app/
+/
 ├── app/                          # Next.js App Router
 │   ├── api/                      # API routes
 │   │   ├── auth/                 # Authentication endpoints
@@ -106,7 +106,6 @@ Before running this application, make sure you have the following:
 
    ```bash
    git clone <repository-url>
-   cd my-movie-app
    ```
 
 2. Install dependencies using pnpm:
